@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Calculadora</string>
+    <string name="lbl_Valor1">Valor 1</string>
+    <string name="lbl_valor2">Valor 2</string>
+    <string name="btn_soma">+</string>
+    <string name="btn_subtracao">-</string>
+    <string name="btn_multiplicacao">*</string>
+    <string name="btn_divisao">/</string>
+    <string name="lbl_Limpar">C</string>
+    <string name="lbl_num0">0</string>
+    <string name="lbl_num1">1</string>
+    <string name="lbl_num2">2</string>
+    <string name="lbl_num3">3</string>
+    <string name="lbl_num4">4</string>
+    <string name="lbl_num5">5</string>
+    <string name="lbl_num6">6</string>
+    <string name="lbl_num7">7</string>
+    <string name="lbl_num8">8</string>
+    <string name="lbl_num9">9</string>
+    <string name="lbl_igualdade">=</string>
+
+
+</resources>
