@@ -1,5 +1,6 @@
 package com.ueuo.gabrieltavares.calculadora;
 
+import android.renderscript.Double2;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -11,13 +12,13 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener{
 
     private EditText txt_valor1, txt_valor2;
     private Button btn_soma,btn_subtracao,btn_divisao,btn_multiplicacao, btn_limpar, btn_igual;
-    private Button btn_num0,btn_num1,btn_num2,btn_num3,btn_num4,btn_num5,btn_num6,btn_num7,btn_num8,btn_num9;
+    private Button btn_virgula,btn_num0,btn_num1,btn_num2,btn_num3,btn_num4,btn_num5,btn_num6,btn_num7,btn_num8,btn_num9;
     Double valor2=0.0,valor1=0.0;
     Double resultado = 0.0;
     String parcial = "";
     String visual = "";
     String operacao = "";
-    int cont = 0;
+    boolean cont = true;
     Double temp=0.0;
 
     @Override
@@ -33,6 +34,7 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener{
         btn_divisao = (Button) findViewById(R.id.btn_divisao);
         btn_multiplicacao = (Button) findViewById(R.id.btn_multiplicacao);
         btn_limpar = (Button) findViewById(R.id.btn_Limpar);
+        btn_igual = (Button) findViewById(R.id.btn_igualdade);
 
         btn_num0 = (Button) findViewById(R.id.btn_num0);
         btn_num1 = (Button) findViewById(R.id.btn_num1);
@@ -44,7 +46,7 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener{
         btn_num7 = (Button) findViewById(R.id.btn_num7);
         btn_num8 = (Button) findViewById(R.id.btn_num8);
         btn_num9 = (Button) findViewById(R.id.btn_num9);
-        btn_igual = (Button) findViewById(R.id.btn_igualdade);
+        btn_virgula = (Button) findViewById(R.id.btn_virgula);
 
         btn_num0.setOnClickListener(this);
         btn_num1.setOnClickListener(this);
@@ -56,6 +58,7 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener{
         btn_num7.setOnClickListener(this);
         btn_num8.setOnClickListener(this);
         btn_num9.setOnClickListener(this);
+        btn_virgula.setOnClickListener(this);
 
         btn_soma.setOnClickListener(this);
         btn_subtracao.setOnClickListener(this);
@@ -70,13 +73,6 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener{
     }
     @Override
     public void onClick(View v) {
-
-        try {
-            valor1 = Double.parseDouble(txt_valor1.getText().toString());
-            valor2 = Double.parseDouble(txt_valor2.getText().toString());
-        }catch (Exception e){
-
-        }
 
         switch(v.getId()) {
             case R.id.btn_num0:
@@ -109,6 +105,9 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener{
             case R.id.btn_num9:
                 coletarNumero(v);
                 break;
+            case R.id.btn_virgula:
+                coletarNumero(v);
+                break;
             case R.id.btn_soma:
                 operacao = "+";
                 colocarOperador(operacao);
@@ -130,27 +129,21 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener{
                 parcial = "";
                 break;
             case R.id.btn_Limpar:
-
                 parcial = "";
                 resultado=0.0;
                 parcial="";
                 visual="";
                 txt_valor1.setText("");
                 txt_valor2.setText("");
+                cont = true;
                 break;
             case R.id.btn_igualdade:
                 realizarCalculo(operacao);
+                txt_valor2.setText(String.valueOf(resultado));
                 break;
                 default:
                     break;
         }
-
-        if (cont ==0){
-            resultado = Double.parseDouble(parcial);
-        }
-        cont++;
-
-        txt_valor2.setText(String.valueOf(resultado));
 
        // AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         //alertDialog.setMessage("O resultado é:"+ resultado);
@@ -167,19 +160,19 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener{
     }
 
     public void realizarCalculo(String operacao){
-        temp = Double.parseDouble(parcial);
+
         switch(operacao){
             case "+":
-                resultado = resultado+Double.valueOf(temp);
+                resultado = resultado+Double.valueOf(parcial);
                 break;
             case "-":
-                resultado = resultado-Double.valueOf(temp);
+                resultado = resultado-Double.valueOf(parcial);
                 break;
             case "*":
-                resultado = resultado*Double.valueOf(temp);
+                resultado = resultado*Double.valueOf(parcial);
                 break;
             case "/":
-                resultado = resultado/Double.valueOf(temp);
+                resultado = resultado/Double.valueOf(parcial);
                 break;
             default:
                 break;
@@ -230,14 +223,22 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener{
                 visual = visual + "9";
                 parcial = parcial + "9";
                 break;
+            case R.id.btn_virgula:
+                visual = visual + ",";
+                parcial = parcial+".";
+                break;
         }
         txt_valor1.setText(visual);
+        txt_valor2.setText(String.valueOf(resultado));
 
     }
 
-
-
     public void colocarOperador(String operacao){
+
+        if (cont){
+            resultado = Double.parseDouble(parcial);
+            cont = false;
+        }
 
         switch(operacao){
             case "+":
@@ -247,19 +248,15 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener{
             case "-":
                 visual= visual+"-";
                 operacao="-";
-
                 break;
             case "*":
                 visual= visual+"*";
                 operacao="*";
-
                 break;
             case "/":
                 visual= visual+"/";
                 operacao="/";
-
                 break;
-
             default:
                 break;
         }
