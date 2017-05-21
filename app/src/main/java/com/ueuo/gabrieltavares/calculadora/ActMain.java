@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class ActMain extends AppCompatActivity implements View.OnClickListener{
 
@@ -26,8 +29,8 @@ public class ActMain extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_main);
 
-        txt_valor1 = (EditText) findViewById(R.id.txt_Valor1);
-        txt_valor2 = (EditText) findViewById(R.id.txt_Valor2);
+        txt_valor1 = (TextView) findViewById(R.id.txt_Valor1);
+        txt_valor2 = (TextView) findViewById(R.id.txt_Valor2);
 
         btn_soma = (Button) findViewById(R.id.btn_soma);
         btn_subtracao = (Button) findViewById(R.id.btn_subtracao);
